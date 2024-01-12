@@ -22,7 +22,6 @@ void addSong(struct Song library[], int *numSongs) {
 
     (*numSongs)++; // Erhöhe die Anzahl der Songs in der Bibliothek
 }
-//test123
 // Funktion zum Anzeigen aller Songs in der Bibliothek
 void displayLibrary(const struct Song library[], int numSongs) {
     printf("\nMusikbibliothek:\n");
