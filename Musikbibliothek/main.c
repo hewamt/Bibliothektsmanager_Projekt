@@ -34,6 +34,7 @@ void displayLibrary(const struct Song library[], int numSongs) {
 void changeMusik(struct Song library[]){
 
     printf("\nWelches Lied möchten sie ändern?\n");
+    printf("Bitte die Nr. eingeben!");
     int nummer = 0;
     scanf("%d" , &nummer);
     if(nummer != 0){
@@ -50,25 +51,50 @@ void changeMusik(struct Song library[]){
             printf("Neuer Titel:\n");
             scanf( "%s", &library[nummer].title);
             printf("Titel wurde geändert\n");
-        }
-        if(auswahl == 2){
-            printf("Neuer Interpreten:\n");
-            scanf( "%s", &library[nummer].artist);
-            printf("Interpreten wurde geändert\n");
             }
-        if(auswahl == 3){
-            printf("Neuer Jahr:\n");
-            scanf( "%d", &library[nummer].year);
-            printf("Jahr wurde geändert\n");
+            else
+            {
+                if(auswahl == 2){
+                printf("Neuer Interpreten:\n");
+                scanf( "%s", &library[nummer].artist);
+                printf("Interpreten wurde geändert\n");
+                }
+                else{
+                    if(auswahl == 3){
+                        printf("Neuer Jahr:\n");
+                        scanf( "%d", &library[nummer].year);
+                        printf("Jahr wurde geändert\n");
+                        }
+                        else{
+                            printf("Keine Änderung vorgenomen.\n");
+                            }
+                            }
             }
-            else{
-            printf("Keine Änderung vorgenomen.\n");
             }
-    }
     else{
         printf("Falsche eingabe!!");
         }
 
+}
+void deleteSongs(struct Song library[], int *numSongs){
+
+    printf("\n Welches Lied möchten sie löschen? Bitte Nummer angeben:\n");
+    int nummer = 0;
+    scanf("%d", &nummer);
+    int anzahl = numSongs;
+
+    if(nummer != 0 && nummer <= numSongs){
+        for(int i = nummer -1; i < anzahl; i++){
+            strcpy(library[i].title,library[i+1].title);
+            strcpy(library[i].artist,library[i+1].artist);
+            library[i].year = library[i+1].year;
+        }
+        (*numSongs)--;
+        printf("Lied wurde gelöscht.\n");
+        }
+        else{
+            printf(" Falsche Eingabe oder Musik nicht gefunden");
+        }
 }
 
 void searchmusik(struct Song library[], int *numSongs){
@@ -127,6 +153,7 @@ int main() {
         printf("2. Bibliothek anzeigen\n");
         printf("3. Musik bearbeiten\n");
         printf("4. Musik suchen\n");
+        printf("5. Musik löschen\n");
         printf("0. Beenden\n");
         printf("Auswahl: ");
         scanf("%d", &choice);
@@ -143,6 +170,9 @@ int main() {
                 break;
             case 4:
                 searchmusik(musicLibrary, &numSongs);
+                break;
+            case 5:
+                deleteSongs(musicLibrary, &numSongs);
                 break;
             case 0:
                 printf("Programm wird beendet.\n");
