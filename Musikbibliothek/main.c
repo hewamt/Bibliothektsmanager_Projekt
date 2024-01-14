@@ -61,7 +61,7 @@ void changeMusik(struct Song library[]){
                 }
                 else{
                     if(auswahl == 3){
-                        printf("Neuer Jahr:\n");
+                        printf("Neues Jahr:\n");
                         scanf( "%d", &library[nummer].year);
                         printf("Jahr wurde geändert\n");
                         }
@@ -79,22 +79,42 @@ void changeMusik(struct Song library[]){
 void deleteSongs(struct Song library[], int *numSongs){
 
     printf("\n Welches Lied möchten sie löschen? Bitte Nummer angeben:\n");
-    int nummer = 0;
+    int nummer;
     scanf("%d", &nummer);
-    int anzahl = numSongs;
+    if(nummer < 1 || nummer > *numSongs){
+        printf("Falsche eingabe kehre zum Hauptmenü zurück.");
+    }
+    else{
+        printf("Soll wirklich Song: %s - %s (%d) gelöscht werden?" ,library[nummer-1].artist, library[nummer-1].title, library[nummer-1].year);
+        printf("1, Ja\n");
+        printf("2. Nein\n");
+        int antwort = 2;
+        printf("\nantwort : %d", antwort);
+        scanf("%d", &antwort);
+        printf(" antwort : %d", antwort);
+        switch (antwort)
+        {
+        case 1:
+        if( nummer == *numSongs){
+            (*numSongs)--;
+            }else{
+                for(int i = nummer; i <= *numSongs ; i++){
+                    int y = i-1;
+                    strcpy(library[y].title,library[i].title);
+                    strcpy(library[y].artist,library[i].artist);
+                    strcpy(library[y].year,library[i].year);
+                }
+                (*numSongs)--;
 
-    if(nummer != 0 && nummer <= numSongs){
-        for(int i = nummer -1; i < anzahl; i++){
-            strcpy(library[i].title,library[i+1].title);
-            strcpy(library[i].artist,library[i+1].artist);
-            library[i].year = library[i+1].year;
+            }
+            printf("Lied wurde gelöscht.\n");
+            break;
+        
+        default:
+        printf("Vorgang wurde abgebrochen kert zurück zum Hauptmenü.\n");
+            break;
         }
-        (*numSongs)--;
-        printf("Lied wurde gelöscht.\n");
-        }
-        else{
-            printf(" Falsche Eingabe oder Musik nicht gefunden");
-        }
+    }
 }
 
 void searchmusik(struct Song library[], int *numSongs){
